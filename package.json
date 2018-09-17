@@ -44,7 +44,7 @@
     "@types/bl": "^0.8.32",
     "@types/blue-tape": "^0.1.31",
     "@types/lru-cache": "^4.1.1",
-    "@types/md5": "^2.1.32",
+    "@types/md5": "2.1.32",
     "@types/mime": "^2.0.0",
     "@types/node": "^10.3.6",
     "@types/normalize-package-data": "^2.4.0",
