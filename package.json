@@ -51,7 +51,7 @@
     "@types/promise-retry": "^1.1.2",
     "@types/puppeteer": "^1.11.1",
     "@types/qr-image": "^3.2.1",
-    "@types/raven": "^2.5.1",
+    "@types/raven": "^2.5.2",
     "@types/read-pkg-up": "^3.0.1",
     "@types/request": "^2.47.1",
     "@types/semver": "^5.5.0",
