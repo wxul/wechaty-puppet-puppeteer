@@ -97,7 +97,7 @@
     "hot-import": "^0.2.1",
     "lru-cache": "^5.0.0",
     "md5": "^2.2.1",
-    "mime": "^2.3.1",
+    "mime": "^2.4.2",
     "promise-retry": "^1.1.1",
     "puppeteer": "^1.11.0",
     "qr-image": "^3.2.0",
