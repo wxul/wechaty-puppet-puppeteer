@@ -52,7 +52,7 @@ export function webMessageType (
      */
     case WebMessageType.SYS:
       return MessageType.Text
-    // add recall type
+    
     case WebMessageType.RECALLED:
       return MessageType.Recalled
     // VERIFYMSG           = 37,
