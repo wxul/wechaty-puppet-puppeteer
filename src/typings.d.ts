@@ -6,3 +6,5 @@ interface Window {
 }
 
 declare const WechatyBro: any
+
+declare module 'quick-lru'
