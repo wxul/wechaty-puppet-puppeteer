@@ -16,7 +16,7 @@
  *   limitations under the License.
  *
  */
-import LRU from 'lru-cache';
+import { Cache } from 'lru-cache';
 import { FileBox } from 'file-box';
 import { Watchdog } from 'watchdog';
 import { ContactPayload, FriendshipPayload, MessagePayload, Puppet, PuppetOptions, PuppetQrcodeScanEvent, Receiver, RoomInvitationPayload, RoomMemberPayload, RoomPayload, UrlLinkPayload } from 'wechaty-puppet';
@@ -30,7 +30,7 @@ export declare class PuppetPuppeteer extends Puppet {
     scanPayload?: PuppetQrcodeScanEvent;
     scanWatchdog: Watchdog<ScanFoodType>;
     private fileId;
-    protected readonly cacheMessageRawPayload: LRU.Cache<string, WebMessageRawPayload>;
+    protected readonly cacheMessageRawPayload: Cache<string, WebMessageRawPayload>;
     constructor(options?: PuppetOptions);
     start(): Promise<void>;
     /**
