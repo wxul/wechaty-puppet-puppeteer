@@ -23,6 +23,7 @@
 
 import path    from 'path'
 import nodeUrl from 'url'
+import LRU     from 'lru-cache'
 
 import bl       from 'bl'
 import md5      from 'md5'
@@ -113,6 +114,8 @@ export class PuppetPuppeteer extends Puppet {
 
   private fileId: number
 
+  protected readonly cacheMessageRawPayload    : LRU.Cache<string, WebMessageRawPayload>
+
   constructor (
     public options: PuppetOptions = {},
   ) {
@@ -122,6 +125,14 @@ export class PuppetPuppeteer extends Puppet {
     this.bridge = new Bridge({
       head   : envHead(),
       memory : this.memory,
+    })
+
+    this.cacheMessageRawPayload    = new LRU<string, WebMessageRawPayload>({
+      dispose (key: string, val: object) {
+        log.silly('PuppetPuppeteer', 'constructor() lruOptions.dispose(%s, %s)', key, JSON.stringify(val).substr(0, 140))
+      },
+      max: 100 * 1000,
+      maxAge: 1000 * 60 * 10,
     })
 
     const SCAN_TIMEOUT  = 2 * 60 * 1000 // 2 minutes
@@ -316,8 +327,29 @@ export class PuppetPuppeteer extends Puppet {
     return this.bridge
   }
 
+  protected messageRawPayloadCache (messageId: string): undefined | WebMessageRawPayload {
+    log.silly('PuppetPuppeteer', 'messageRawPayloadCache(id=%s) @ %s', messageId, this)
+    if (!messageId) {
+      throw new Error('no messageId')
+    }
+    const cachedRawPayload = this.cacheMessageRawPayload.get(messageId)
+
+    if (cachedRawPayload) {
+      log.silly('PuppetPuppeteer', 'MessageRawPayload(%s) cache HIT', messageId)
+    } else {
+      log.silly('PuppetPuppeteer', 'MessageRawPayload(%s) cache MISS', messageId)
+    }
+
+    return cachedRawPayload
+  }
+
   public async messageRawPayload (id: string): Promise <WebMessageRawPayload> {
+    const cachedPayload = this.messageRawPayloadCache(id)
+    if (cachedPayload) {
+      return cachedPayload
+    }
     const rawPayload = await this.bridge.getMessage(id)
+    this.cacheMessageRawPayload.set(id, rawPayload)
     return rawPayload
   }
 
