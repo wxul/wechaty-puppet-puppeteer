@@ -24,7 +24,7 @@
 import path    from 'path'
 import nodeUrl from 'url'
 // tslint:disable-next-line
-import LRU, { Cache } from 'lru-cache'
+import LRU     from 'lru-cache'
 
 import bl       from 'bl'
 import md5      from 'md5'
@@ -115,7 +115,7 @@ export class PuppetPuppeteer extends Puppet {
 
   private fileId: number
 
-  protected readonly cacheMessageRawPayload    : Cache<string, WebMessageRawPayload>
+  protected readonly cacheMessageRawPayload    : LRU.Cache<string, WebMessageRawPayload>
 
   constructor (
     public options: PuppetOptions = {},
