@@ -23,6 +23,7 @@
 
 import path    from 'path'
 import nodeUrl from 'url'
+// tslint:disable-next-line
 import LRU     from 'lru-cache'
 
 import bl       from 'bl'
@@ -129,7 +130,11 @@ export class PuppetPuppeteer extends Puppet {
 
     this.cacheMessageRawPayload    = new LRU<string, WebMessageRawPayload>({
       dispose (key: string, val: object) {
-        log.silly('PuppetPuppeteer', 'constructor() lruOptions.dispose(%s, %s)', key, JSON.stringify(val).substr(0, 140))
+        log.silly('PuppetPuppeteer',
+          'constructor() lruOptions.dispose(%s, %s)',
+          key,
+          JSON.stringify(val).substr(0, 140)
+        )
       },
       max: 100 * 1000,
       maxAge: 1000 * 60 * 10,
